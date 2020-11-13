@@ -1,0 +1,14 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>add-user</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <app-auth-form
+          #addUserForm
+          (formSubmitted)="addUser($event)"
+          [actionButtonText]="'Add User'"
+          [isPasswordResetPage]="true"
+  ></app-auth-form>
+</ion-content>
