@@ -12,13 +12,11 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadChildren:
-                '../pages/shopping-list/shopping-list.module#ShoppingListPageModule',
+            loadChildren: () => import('../pages/shopping-list/shopping-list.module').then(m => m.ShoppingListPageModule),
           },
           {
             path: 'shopping-list-add',
-            loadChildren:
-                '../pages/shopping-list-add/shopping-list-add.module#ShoppingListAddPageModule',
+            loadChildren: () => import('../pages/shopping-list-add/shopping-list-add.module').then(m => m.ShoppingListAddPageModule),
           },
         ],
       },
@@ -27,13 +25,11 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadChildren:
-                '../pages/inventory/inventory.module#InventoryPageModule',
+            loadChildren: () => import('../pages/inventory/inventory.module').then(m => m.InventoryPageModule)
           },
           {
             path: 'inventory-add',
-            loadChildren:
-                '../pages/inventory-add/inventory-add.module#InventoryAddPageModule',
+            loadChildren: () => import('../pages/inventory-add/inventory-add.module').then(m => m.InventoryAddPageModule)
           },
         ],
       },
@@ -55,4 +51,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class TabsPageRoutingModule {}
+export class TabsPageRoutingModule { }
