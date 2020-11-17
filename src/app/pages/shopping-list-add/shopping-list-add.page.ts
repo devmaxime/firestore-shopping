@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {InventoryService} from '../../services/inventory.service';
+import {Grocery} from '../../models/grocery';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-shopping-list-add',
@@ -6,10 +9,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./shopping-list-add.page.scss'],
 })
 export class ShoppingListAddPage implements OnInit {
-
-  constructor() { }
+  public groceryList: Observable<Grocery[]>;
+  constructor(private inventoryService: InventoryService) { }
 
   ngOnInit() {
+    this.inventoryService.getGroceryListForShoppingList(false).then(groceryList$ => {
+      this.groceryList = groceryList$.valueChanges();
+    });
+  }
+
+  addGrocery(groceryId: string): void {
+    this.inventoryService.addGroceryToShoppingList(groceryId);
   }
 
 }

@@ -4,6 +4,68 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding">
+  <form [formGroup]="addGroceryForm">
+    <ion-item>
+      <ion-label position="stacked">Name</ion-label>
+      <ion-input
+              formControlName="name"
+              type="text"
+              placeholder="What are you adding?"
+              [class.invalid]="!addGroceryForm.controls['name'].valid && addGroceryForm.controls['name'].touched"
+      >
+      </ion-input>
+    </ion-item>
+    <ion-item
+            class="error-message"
+            *ngIf="!addGroceryForm.controls['name'].valid &&
+                 addGroceryForm.controls['name'].touched"
+    >
+      <ion-label>You need to enter a name.</ion-label>
+    </ion-item>
 
+    <ion-item *ngIf="!inShoppingList">
+      <ion-label position="stacked">How many?</ion-label>
+      <ion-input
+              formControlName="quantity"
+              type="number"
+              placeholder="What are you adding?"
+              [class.invalid]="!addGroceryForm.controls['quantity'].valid && addGroceryForm.controls['quantity'].touched"
+      >
+      </ion-input>
+    </ion-item>
+    <ion-item
+            class="error-message"
+            *ngIf="!addGroceryForm.controls['quantity'].valid &&
+                 addGroceryForm.controls['quantity'].touched"
+    >
+      <ion-label>You need to enter how many you're adding.</ion-label>
+    </ion-item>
+
+    <ion-list>
+      <ion-radio-group formControlName="units">
+        <ion-list-header>
+          <ion-label>How do you measure it?</ion-label>
+        </ion-list-header>
+
+        <ion-item>
+          <ion-label>Units</ion-label>
+          <ion-radio slot="start" value="units" checked></ion-radio>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Grams</ion-label>
+          <ion-radio slot="start" value="grams"></ion-radio>
+        </ion-item>
+      </ion-radio-group>
+    </ion-list>
+
+    <ion-button
+            (click)="addGrocery(addGroceryForm)"
+            expand="block"
+            [disabled]="!addGroceryForm.valid"
+    >
+      Add Grocery
+    </ion-button>
+  </form>
 </ion-content>

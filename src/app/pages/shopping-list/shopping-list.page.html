@@ -5,5 +5,45 @@
 </ion-header>
 
 <ion-content>
-
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button> <ion-icon name="add"></ion-icon> </ion-fab-button>
+    <ion-fab-list side="top">
+      <ion-fab-button
+              color="primary"
+              routerLink="/tabs/inventory/inventory-add/true"
+      >
+        <ion-icon name="add"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button color="primary" routerLink="/shopping-list-add">
+        <ion-icon name="arrow-forward"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+  <ion-list>
+    <ion-list-header> Grocery List </ion-list-header>
+    <ion-item *ngFor="let grocery of groceryList | async">
+      <ion-label> {{ grocery.name }} </ion-label>
+      <ion-button
+              slot="end"
+              (click)="pickQuantity(grocery.id, grocery.name, grocery.units)"
+      >
+        <ion-icon slot="icon-only" name="add"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
+  <ion-list>
+    <ion-list-header> Picked Groceries </ion-list-header>
+    <ion-item *ngFor="let pickedGrocery of pickedGroceryList | async">
+      <ion-label> {{ pickedGrocery.name }} </ion-label>
+      <ion-button slot="end" (click)="removeGrocery(pickedGrocery.id)">
+        <ion-icon slot="icon-only" name="remove"></ion-icon>
+      </ion-button>
+      <span class="smaller-font" slot="end">
+      {{ pickedGrocery.quantityShopping }} {{ pickedGrocery.units }}
+    </span>
+      <ion-button slot="end" (click)="addGrocery(pickedGrocery.id)">
+        <ion-icon slot="icon-only" name="add"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
 </ion-content>

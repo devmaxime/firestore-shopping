@@ -1,9 +1,37 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>inventory</ion-title>
+    <ion-title>Inventory</ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerLink="/add-user">
+        <ion-icon slot="icon-only" name="person-add"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding">
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button routerLink="/inventory-add">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 
+  <ion-list>
+    <ion-list-header> My Home's Inventory </ion-list-header>
+    <ion-item *ngFor="let grocery of groceryList | async">
+      <ion-label>
+        <h2>{{ grocery.name }}</h2>
+        <h3>
+          There {{ grocery.quantity > 1 ? "are" : "is" }}
+          <strong>{{ grocery.quantity }} {{ grocery.units }}</strong>
+        </h3>
+      </ion-label>
+      <ion-button slot="end" (click)="removeGrocery(grocery.id)">
+        <ion-icon slot="icon-only" name="remove"></ion-icon>
+      </ion-button>
+      <ion-button slot="end" (click)="addGrocery(grocery.id)">
+        <ion-icon slot="icon-only" name="add"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
 </ion-content>

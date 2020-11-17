@@ -31,6 +31,10 @@ const routes: Routes = [
             path: 'inventory-add',
             loadChildren: () => import('../pages/inventory-add/inventory-add.module').then(m => m.InventoryAddPageModule)
           },
+          {
+            path: 'inventory-add/:inShoppingList',
+            loadChildren: '../pages/inventory-add/inventory-add.module#InventoryAddPageModule',
+          },
         ],
       },
       {
