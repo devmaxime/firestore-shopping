@@ -33,7 +33,7 @@ const routes: Routes = [
           },
           {
             path: 'inventory-add/:inShoppingList',
-            loadChildren: '../pages/inventory-add/inventory-add.module#InventoryAddPageModule',
+            loadChildren: () => import('../pages/inventory-add/inventory-add.module').then( m => m.InventoryAddPageModule)
           },
         ],
       },

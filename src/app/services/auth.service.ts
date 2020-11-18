@@ -7,12 +7,14 @@ import firebase from 'firebase/app';
 
 import {UserProfile} from '../models/user-profile';
 import {TeamProfile} from '../models/team-profile';
+import {Grocery} from '../models/grocery';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthService {
     public userId: string;
+    public Id: string;
 
     constructor(
         private afAuth: AngularFireAuth,
@@ -52,8 +54,8 @@ export class AuthService {
 
             await userProfileDocument.set({
                 id: adminUserCredential.user.uid,
-                email: email,
-                teamId: teamId,
+                email,
+                teamId,
                 teamAdmin: true,
             });
 
@@ -80,9 +82,9 @@ export class AuthService {
         const id: string = this.firestore.createId();
 
         const regularUser = {
-            id: id,
-            email: email,
-            teamId: teamId
+            id,
+            email,
+            teamId
         };
 
         return userCollection.add(regularUser);
@@ -97,5 +99,44 @@ export class AuthService {
 
         return userProfile.data().teamId;
     }
+
+    async getTeamMemberList(): Promise<AngularFirestoreCollection<any>> {
+        const teamId: string = await this.getTeamId();
+
+        return this.firestore.collection<any>(
+            `/teamProfile/${teamId}/teamMemberList`,
+        );
+
+    }
+
+    async removeMemberFromTeam(memberId: string): Promise<void> {
+        const teamId: string = await this.getTeamId();
+        /* const memberRef = await this.firestore
+             .collection(`/teamProfile/${teamId}/teamMemberList/`,
+        ref =>
+            ref
+                .where('id', '==', memberId));
+
+         memberRef.doc().delete()
+             .then(data => {
+                 console.log('Document successfully deleted!');
+             }).catch(
+             error => {
+                 console.error('Error removing document: ', error);
+             });*/
+
+        const db = firebase.firestore();
+        const test = await db.collection(`/teamProfile/${teamId}/teamMemberList/`)
+            .where('id', '==', memberId)
+            .get()
+            .then(snap => {
+                snap.forEach(doc => {
+                    console.log(doc.id);
+                    this.Id = doc.id;
+                });
+            });
+        return this.firestore.doc(`/teamProfile/${teamId}/teamMemberList/${this.Id}`).delete();
+    }
+
 
 }

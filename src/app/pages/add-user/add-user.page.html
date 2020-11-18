@@ -1,6 +1,9 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>add-user</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/inventory"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Manage users</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -11,4 +14,17 @@
           [actionButtonText]="'Add User'"
           [isPasswordResetPage]="true"
   ></app-auth-form>
+
+  <ion-list>
+    <ion-list-header> My Members</ion-list-header>
+    <ion-item *ngFor="let member of memberList | async">
+      <ion-label>
+        <h2>{{ member.email }}</h2>
+        <h2>{{ member.id }}</h2>
+      </ion-label>
+      <ion-button slot="end" (click)="removeUser(member.id)" >
+        <ion-icon slot="icon-only" name="remove"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
 </ion-content>
