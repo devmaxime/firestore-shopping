@@ -187,4 +187,11 @@ export class InventoryService {
     });
   }
 
+  async deleteGrocery(groceryId: string): Promise<void> {
+    const teamId: string = await this.authService.getTeamId();
+    const groceryRef: firebase.firestore.DocumentReference = this.firestore.doc(
+        `/teamProfile/${teamId}/groceryList/${groceryId}`
+    ).ref;
+    groceryRef.delete();
+  }
 }

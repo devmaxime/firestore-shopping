@@ -1,5 +1,7 @@
 {
   "name": "firestore-shopping",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

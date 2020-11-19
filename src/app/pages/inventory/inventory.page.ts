@@ -83,4 +83,9 @@ export class InventoryPage implements OnInit {
         });
         prompt.present();
     }
+
+    async deleteGrocery(groceryId: string): Promise<void> {
+        console.log('Deleting.. ' + groceryId);
+        this.inventoryService.deleteGrocery(groceryId);
+    }
 }
