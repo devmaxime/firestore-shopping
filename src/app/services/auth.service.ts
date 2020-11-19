@@ -111,20 +111,18 @@ export class AuthService {
 
     async removeMemberFromTeam(memberId: string): Promise<void> {
         const teamId: string = await this.getTeamId();
-        /* const memberRef = await this.firestore
-             .collection(`/teamProfile/${teamId}/teamMemberList/`,
-        ref =>
-            ref
-                .where('id', '==', memberId));
 
-         memberRef.doc().delete()
-             .then(data => {
-                 console.log('Document successfully deleted!');
-             }).catch(
-             error => {
-                 console.error('Error removing document: ', error);
-             });*/
+        /* NOT WORKING CODE */
+        const memberList = this.firestore
+            .collection('/teamProfile/${teamId}/teamMemberList/')
+            .valueChanges()
+            .subscribe(
+                ( $members => {
+                    console.log($members);
+                })
+            );
 
+        /* WORKING CODE NOT USING ANGULARFIRE
         const db = firebase.firestore();
         const test = await db.collection(`/teamProfile/${teamId}/teamMemberList/`)
             .where('id', '==', memberId)
@@ -135,7 +133,7 @@ export class AuthService {
                     this.Id = doc.id;
                 });
             });
-        return this.firestore.doc(`/teamProfile/${teamId}/teamMemberList/${this.Id}`).delete();
+        return this.firestore.doc(`/teamProfile/${teamId}/teamMemberList/${this.Id}`).delete(); */
     }
 
 

@@ -14,6 +14,7 @@ export class AddUserPage implements OnInit {
     @ViewChild(AuthFormComponent) addUserForm: AuthFormComponent;
 
     public memberList: Observable<any>;
+    public test: any;
 
     constructor(
         private authService: AuthService,
