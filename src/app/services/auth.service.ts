@@ -7,7 +7,6 @@ import firebase from 'firebase/app';
 
 import {UserProfile} from '../models/user-profile';
 import {TeamProfile} from '../models/team-profile';
-import {Grocery} from '../models/grocery';
 
 @Injectable({
     providedIn: 'root'
@@ -112,17 +111,6 @@ export class AuthService {
     async removeMemberFromTeam(memberId: string): Promise<void> {
         const teamId: string = await this.getTeamId();
 
-        /* NOT WORKING CODE */
-        const memberList = this.firestore
-            .collection('/teamProfile/${teamId}/teamMemberList/')
-            .valueChanges()
-            .subscribe(
-                ( $members => {
-                    console.log($members);
-                })
-            );
-
-        /* WORKING CODE NOT USING ANGULARFIRE
         const db = firebase.firestore();
         const test = await db.collection(`/teamProfile/${teamId}/teamMemberList/`)
             .where('id', '==', memberId)
@@ -133,7 +121,7 @@ export class AuthService {
                     this.Id = doc.id;
                 });
             });
-        return this.firestore.doc(`/teamProfile/${teamId}/teamMemberList/${this.Id}`).delete(); */
+        return this.firestore.doc(`/teamProfile/${teamId}/teamMemberList/${this.Id}`).delete();
     }
 
 
